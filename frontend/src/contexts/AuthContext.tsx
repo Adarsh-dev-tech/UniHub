@@ -60,9 +60,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-  const register = async (email: string, password: string, name: string) => {
+  const register = async (
+    email: string,
+    password: string,
+    profile: { name: string; branch: string; year: number; semester: number; section: string }
+  ) => {
     try {
-      const response = await api.post('/auth/register', { email, password, name });
+      const response = await api.post('/auth/register', {
+        email,
+        password,
+        name: profile.name,
+        branch: profile.branch,
+        year: profile.year,
+        semester: profile.semester,
+        section: profile.section
+      });
       const { token: newToken, user: newUser } = response.data;
 
       setToken(newToken);

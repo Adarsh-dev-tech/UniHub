@@ -18,7 +18,11 @@ const generateToken = (id) => {
 router.post('/register', [
   body('email').isEmail().normalizeEmail(),
   body('password').isLength({ min: 6 }),
-  body('name').isLength({ min: 2 }).trim()
+  body('name').isLength({ min: 2 }).trim(),
+  body('branch').isLength({ min: 2 }).trim(),
+  body('year').isInt({ min: 1, max: 6 }),
+  body('semester').isInt({ min: 1, max: 12 }),
+  body('section').isLength({ min: 1 }).trim()
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -26,7 +30,7 @@ router.post('/register', [
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email, password, name } = req.body;
+    const { email, password, name, branch, year, semester, section } = req.body;
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -38,11 +42,18 @@ router.post('/register', [
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Create user
+    // Create user with profile
     const user = new User({
       email,
       password: hashedPassword,
-      name
+      name,
+      profile: {
+        branch,
+        year,
+        semester,
+        section: section.toUpperCase()
+      },
+      isSetupComplete: true
     });
 
     await user.save();
@@ -56,6 +67,7 @@ router.post('/register', [
         id: user._id,
         email: user.email,
         name: user.name,
+        profile: user.profile,
         isSetupComplete: user.isSetupComplete
       }
     });

@@ -100,7 +100,11 @@ export interface AuthContextType {
   user: User | null;
   token: string | null;
   login: (email: string, password: string) => Promise<void>;
-  register: (email: string, password: string, name: string) => Promise<void>;
+  register: (
+    email: string,
+    password: string,
+    profile: { name: string; branch: string; year: number; semester: number; section: string }
+  ) => Promise<void>;
   logout: () => void;
   completeSetup: (profileData: ProfileSetupData) => Promise<void>;
   loading: boolean;

@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { DarkModeProvider } from "./contexts/DarkModeContext";
 import Navbar from './components/Navbar';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -67,7 +68,9 @@ const App: React.FC = () => {
     <ThemeProvider>
       <AuthProvider>
         <Router>
-          <AppContent />
+          <DarkModeProvider>
+            <AppContent />
+          </DarkModeProvider>
         </Router>
       </AuthProvider>
     </ThemeProvider>

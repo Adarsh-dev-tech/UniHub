@@ -8,7 +8,11 @@ const RegisterPage: React.FC = () => {
     name: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    branch: '',
+    year: 1,
+    semester: 1,
+    section: ''
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -18,38 +22,47 @@ const RegisterPage: React.FC = () => {
   const { register } = useAuth();
   const navigate = useNavigate();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [name]: name === 'year' || name === 'semester' ? parseInt(value) : value
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     setError('');
-
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
-      setLoading(false);
       return;
     }
-
     if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters long');
-      setLoading(false);
+      setError('Password must be at least 6 characters');
       return;
     }
-
-    try {
-      await register(formData.email, formData.password, formData.name);
-      navigate('/dashboard');
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+    // Validate new fields
+    if (!formData.branch || !formData.section || !formData.year || !formData.semester) {
+      setError('Please fill all profile fields');
+      return;
     }
+    setLoading(true);
+    try {
+      await register(
+        formData.email,
+        formData.password,
+        {
+          name: formData.name,
+          branch: formData.branch,
+          year: formData.year,
+          semester: formData.semester,
+          section: formData.section
+        }
+      );
+    } catch (err: any) {
+      setError(err.message || 'Registration failed');
+    }
+    setLoading(false);
   };
 
   return (
@@ -164,6 +177,69 @@ const RegisterPage: React.FC = () => {
                   )}
                 </button>
               </div>
+            </div>
+
+            <div>
+              <label htmlFor="branch" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Branch/Department
+              </label>
+              <input
+                id="branch"
+                name="branch"
+                type="text"
+                required
+                value={formData.branch}
+                onChange={handleInputChange}
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label htmlFor="year" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Year
+              </label>
+              <select
+                id="year"
+                name="year"
+                required
+                value={formData.year}
+                onChange={handleInputChange}
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              >
+                {[1, 2, 3, 4, 5, 6].map(year => (
+                  <option key={year} value={year}>{year}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="semester" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Semester
+              </label>
+              <select
+                id="semester"
+                name="semester"
+                required
+                value={formData.semester}
+                onChange={handleInputChange}
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              >
+                {[1, 2, 3, 4, 5, 6, 7, 8].map(sem => (
+                  <option key={sem} value={sem}>{sem}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="section" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Section
+              </label>
+              <input
+                id="section"
+                name="section"
+                type="text"
+                required
+                value={formData.section}
+                onChange={handleInputChange}
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              />
             </div>
           </div>
 
