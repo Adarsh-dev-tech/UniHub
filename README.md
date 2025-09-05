@@ -1,163 +1,164 @@
-# UniHub: Project Setup and Development Guide
+# UniHub: A Comprehensive Student Resource Sharing Platform
 
-Welcome to the UniHub project! This document provides detailed instructions for setting up your local development environment to start contributing to the project.
+UniHub is a modern, full-stack web application built with the MERN stack (MongoDB, Express.js, React.js, Node.js) that serves as a centralized platform for college students to upload, share, and discover course-specific academic resources.
 
----
+## 🎯 Core Features
+
+### Personalized Academic Experience
+- **Profile-based Content**: Resources are filtered based on user's branch, year, and semester
+- **Subject Organization**: Clean organization by academic subjects with professor information
+- **Multiple Resource Types**: Support for Course Plans, CT Papers, End Sem Papers, PPTs, Class Notes, Reference Books, YouTube Links, and custom categories
+
+### Modern User Interface
+- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
+- **Dark/Light Mode**: Toggle between themes with persistent user preference
+- **Intuitive Navigation**: Clean dashboard with easy subject access
+- **Real-time Feedback**: Toast notifications and loading states for better UX
+
+### Secure Resource Management
+- **File Upload System**: Secure file upload with validation and size limits
+- **Authentication**: JWT-based authentication with protected routes
+- **Download Tracking**: Monitor resource usage and popularity
+- **Tag-based Organization**: Searchable tags for better resource discovery
+
+## 🚀 Quick Start
 
 ### Prerequisites
+- Node.js (LTS version)
+- MongoDB (local installation or cloud instance)
 
-Before you begin, ensure you have the following software installed on your machine:
+### Installation & Setup
 
-* **Node.js (LTS Version)**: Required to run the React frontend.
+1. **Clone the repository**
+```bash
+git clone https://github.com/Adarsh-dev-tech/UniHub.git
+cd UniHub
+```
 
-* **A C++ Compiler**: A modern compiler like GCC or Clang is needed to build the C++ backend.
+2. **Backend Setup**
+```bash
+cd backend
+npm install
+# Configure environment variables in .env file
+npm run dev
+```
 
-* **Git**: For version control.
+3. **Frontend Setup**
+```bash
+cd frontend
+npm install
+npm start
+```
 
-* **A Code Editor**: VS Code, Sublime Text, or a similar editor of your choice.
+4. **Access the application**
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:5000
 
----
+## 🏗️ Architecture
 
-### 1. General Project Setup
+### Backend (Node.js + Express.js)
+- **Authentication System**: JWT-based user authentication with profile management
+- **Database Models**: Comprehensive schemas for Users, Subjects, Resources, Ratings, and Discussions
+- **File Management**: Secure file upload and storage with validation
+- **API Endpoints**: RESTful API for all application features
+- **Security**: Rate limiting, CORS configuration, and input validation
 
-1.  **Clone the Repository:**
-    Start by cloning the project repository to your local machine.
+### Frontend (React.js + TypeScript)
+- **Component Architecture**: Reusable components with TypeScript for type safety
+- **State Management**: React Context for authentication and theme management
+- **Routing**: Protected routes with automatic redirects
+- **Service Layer**: Organized API communication with error handling
+- **Responsive UI**: Custom CSS with modern design principles
 
-    ```
-    git clone https://github.com/Adarsh-dev-tech/UniHub.git
-    cd UniHub
-    ```
+### Database (MongoDB)
+- **User Management**: Profile-based user system with academic details
+- **Content Organization**: Subject and resource relationship modeling
+- **Rating System**: User feedback and rating collection
+- **Discussion Forums**: Community interaction data structure
 
-2.  **Install C++ Backend Dependencies:**
-    The backend uses a C++ web framework and a MongoDB driver. You will need to install these based on your OS and package manager. For example, using a package manager like `vcpkg` or `conan` is recommended to manage C++ dependencies easily.
+## 📱 User Experience
 
-    * **MongoDB C++ Driver:** Follow the instructions [here](https://www.google.com/search?q=https://www.mongodb.com/docs/drivers/cxx/latest/install/) to install the official MongoDB C++ driver.
+### Registration & Onboarding
+1. **Account Creation**: Simple email/password registration
+2. **Profile Setup**: Academic details (branch, year, semester, section)
+3. **Dashboard Access**: Personalized subject view based on profile
 
-    * **Crow/Pistache Framework:** The specific framework will have its own installation steps. Follow the guide for the chosen framework.
+### Resource Interaction
+1. **Browse Subjects**: View subjects relevant to user's academic profile
+2. **Explore Resources**: Organized by type with easy filtering
+3. **Upload Content**: Intuitive upload modal with file validation
+4. **Download & Share**: Track downloads and resource popularity
 
----
+### Community Features
+- **Discussion Sections**: Q&A forums for each subject (structure implemented)
+- **Rating System**: Rate and review shared resources
+- **Contributor Recognition**: Track and display user contributions
 
-### 2. Frontend Developer Setup
+## 🔧 Technical Implementation
 
-This section is for the team member responsible for the React frontend.
+### Security Features
+- **Authentication**: JWT tokens with automatic refresh
+- **File Validation**: Type checking and size limits for uploads
+- **Protected Routes**: Server and client-side route protection
+- **Input Sanitization**: Validation on all user inputs
 
-1.  **Navigate to the Frontend Directory:**
+### Performance Optimizations
+- **Lazy Loading**: Efficient component loading strategies
+- **Caching**: Browser and server-side caching implementation
+- **Responsive Images**: Optimized media delivery
+- **Bundle Optimization**: Minimized JavaScript bundles
 
-    ```
-    cd frontend
-    ```
+### Scalability Considerations
+- **Modular Architecture**: Separated concerns for easy expansion
+- **Database Indexing**: Optimized queries for large datasets
+- **Error Handling**: Comprehensive error management
+- **Logging**: Request and error logging for monitoring
 
-2.  **Install Node.js Dependencies:**
-    This command will install all the required libraries for React and Tailwind CSS.
+## 📊 Development Status
 
-    ```
-    npm install
-    ```
+### ✅ Completed Features
+- Complete MERN stack implementation
+- User authentication and profile management
+- Subject and resource management
+- File upload and download system
+- Responsive user interface
+- Theme management (dark/light mode)
+- Real-time notifications
 
-3.  **Configure Environment Variables:**
-    Create a `.env.local` file in the `frontend` directory. You will need to add the backend API URL here. Your DevOps teammate will provide the correct value.
+### 🔄 In Progress
+- Advanced search functionality
+- Resource rating and commenting
+- Discussion forum implementation
+- Mobile app optimization
 
-    ```
-    # frontend/.env.local
-    REACT_APP_API_BASE_URL=http://localhost:8080/api
-    ```
+### 📋 Planned Features
+- Cloud storage integration
+- Advanced analytics
+- Notification system
+- Mobile application
+- Study group management
 
-4.  **Run the Development Server:**
-    This will start the React application in development mode. It will be available at `http://localhost:3000`.
+## 🤝 Contributing
 
-    ```
-    npm start
-    ```
+We welcome contributions! Please follow these steps:
 
----
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/new-feature`
+3. Commit your changes: `git commit -m 'Add new feature'`
+4. Push to the branch: `git push origin feature/new-feature`
+5. Submit a pull request
 
-### 3. Backend Developer Setup
+## 📄 License
 
-This section is for the team member responsible for the C++ backend.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-1.  **Navigate to the Backend Directory:**
+## 🙏 Acknowledgments
 
-    ```
-    cd backend
-    ```
-
-2.  **Configure CMake:**
-    The project uses CMake to manage the build process. You'll need to specify the paths to the MongoDB driver and other libraries.
-
-    ```
-    # backend/CMakeLists.txt
-    # Ensure your paths to MongoDB and Crow/Pistache are correct
-    find_package(mongocxx REQUIRED)
-    find_package(Crow REQUIRED) # or Pistache
-    # ... rest of the CMake configuration
-    ```
-
-3.  **Build the Project:**
-    Create a `build` directory and compile the project.
-
-    ```
-    mkdir build
-    cd build
-    cmake ..
-    make
-    ```
-
-4.  **Configure Database Connection:**
-    Create a `config.json` or similar file in the `backend` directory to store your database connection string. This should not be committed to version control. The DevOps teammate will provide the connection string.
-
-    ```
-    // backend/config.json
-    {
-      "mongoDbUri": "mongodb://localhost:27017/unihub_db"
-    }
-    ```
-
-5.  **Run the Backend Server:**
-    Execute the compiled binary to start the API server.
-
-    ```
-    ./unihub_server
-    ```
-
----
-
-### 4. DevOps & Database Engineer Setup
-
-This section outlines the infrastructure setup and is primarily for the DevOps engineer.
-
-1.  **MongoDB Setup:**
-    * Install MongoDB on your local machine or use a cloud service like **MongoDB Atlas**.
-    * Create a database named `unihub_db` and collections for `users`, `resources`, `majors`, etc., according to the schema.
-    * Provide the connection string to the Frontend and Backend team members.
-
-2.  **Google Cloud Platform (GCP) & Firebase:**
-    * Set up a new project on **GCP**.
-    * Enable **Firebase Authentication** and other necessary services.
-    * Create a **Google Cloud Storage** bucket for file uploads and configure its access.
-    * Provide the necessary API keys and service account credentials to the Backend developer for integration.
-
-3.  **Redis Caching (Optional):**
-    * Install Redis locally.
-    * Configure the C++ backend to connect to the Redis instance.
-
----
-
-### 5. Running the Full Application
-
-To run the full application, you need to have both the backend and frontend servers running simultaneously.
-
-1.  In one terminal, navigate to the `backend` directory and run the C++ server.
-
-2.  In a second terminal, navigate to the `frontend` directory and run the React development server.
-
-You should now be able to access the application at `http://localhost:3000`.
+- Built with modern MERN stack technologies
+- Designed for educational resource sharing
+- Community-driven development approach
+- Open source contribution welcome
 
 ---
 
-### Troubleshooting
-
-* **`npm install` fails:** Check your Node.js version and ensure it's up to date. Delete the `node_modules` folder and `package-lock.json` and try again.
-
-* **Backend won't compile:** Double-check your CMake configuration and ensure all C++ dependencies are correctly installed and linked.
-
-* **Frontend can't connect to backend:** Verify that the backend server is running and the `REACT_APP_API_BASE_URL` in your `.env.local` file is correct.
+**UniHub** - Empowering students through collaborative learning and resource sharing.
