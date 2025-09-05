@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import ProfileSetupModal from '../components/ProfileSetupModal';
-import api from '../services/api';
+import { subjectService } from '../services/subjects';
 import { Subject } from '../types';
 import { BookOpen, Users, Star, Calendar } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [loading, setLoading] = useState(true);
   const [showProfileModal, setShowProfileModal] = useState(false);
@@ -28,8 +30,8 @@ const Dashboard: React.FC = () => {
   const fetchSubjects = async () => {
     try {
       setLoading(true);
-      const response = await api.get('/subjects/my-subjects');
-      setSubjects(response.data);
+      const subjects = await subjectService.getMySubjects();
+      setSubjects(subjects);
     } catch (error: any) {
       toast.error(error.response?.data?.message || 'Failed to fetch subjects');
     } finally {
@@ -182,10 +184,7 @@ const Dashboard: React.FC = () => {
                   key={subject._id}
                   className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm hover:shadow-md 
                            transition-shadow cursor-pointer border border-gray-200 dark:border-gray-700"
-                  onClick={() => {
-                    // TODO: Navigate to subject page
-                    toast(`Subject page for ${subject.subjectCode} coming soon!`);
-                  }}
+                  onClick={() => navigate(`/subject/${subject.subjectCode}`)}
                 >
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                     {subject.subjectName}
